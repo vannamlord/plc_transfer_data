@@ -6,10 +6,6 @@ let getUploadFilePage = async (req, res) => {
     return res.render('uploadFile.ejs')
 }
 
-let getUpdateApp = async (req, res) => {
-    return res.render('checkUpdateApp.ejs')
-}
-
 const upload = multer().single('profile_pic');
 
 let handleUploadFile = async (req, res) => {
@@ -79,9 +75,6 @@ let handleUploadFile = async (req, res) => {
     });
 }
 
-let handCheckUpdateApp = async (req, res) => {
-    res.send(`{${data_sta_proc}}`);
-}
 module.exports = {
-    getUploadFilePage, handleUploadFile, getUpdateApp, handCheckUpdateApp
+    getUploadFilePage, handleUploadFile
 }
