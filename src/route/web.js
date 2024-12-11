@@ -13,7 +13,7 @@ let router = express.Router();
 // Handle form submission
 app.post('/', (req, res) => {
     const { ip, port, data } = req.body;
-
+    console.log(ip + port + data);
     // Validate input
     if (!ip || !port || !data) {
         return res.status(400).send("Error: IP, port, and data are required.");
