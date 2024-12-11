@@ -1,0 +1,5 @@
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+Close the current terminal and open a new one to make the nvm command available.
+nvm install 14.17.0
+nvm use 14.17.0
+nvm alias default 14.17.0

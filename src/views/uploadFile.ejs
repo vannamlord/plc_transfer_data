@@ -1,0 +1,58 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.JS Basic</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+
+<body>
+    <div class="topnav">
+        <a href="/" class="active">Transfer Data</a>
+    </div>
+
+    <div class="upload-file-container">
+        <div>
+            <label class="basiclabel">IP:</label>
+            <input type="text" id="ipInput" placeholder="Enter IP Address" />
+            <label class="basiclabel">Port:</label>
+            <input type="text" id="portInput" placeholder="Enter Port" />
+        </div>
+        <div>
+            <input type="text" id="dataInput" name="data_transfer" placeholder="Please Enter data" />
+            <button class="btn-save" id="confirmButton">Confirm Transfer</button>
+        </div>
+    </div>
+    <script>
+        const confirmButton = document.getElementById('confirmButton');
+        const ipInput = document.getElementById('ipInput');
+        const portInput = document.getElementById('portInput');
+        const dataInput = document.getElementById('dataInput');
+
+        const socket = new WebSocket('ws://localhost:3000'); // Connect to WebSocket server
+
+        confirmButton.addEventListener('click', () => {
+            const ip = ipInput.value.trim();
+            const port = portInput.value.trim();
+            const data = dataInput.value.trim();
+
+            if (!ip || !port || !data) {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            const payload = JSON.stringify({ ip, port, data }); // Prepare JSON payload
+            socket.send(payload); // Send the payload to the server
+            alert('Data sent to ' + ip + ':' + port);
+        });
+
+        socket.onopen = () => console.log('Connected to WebSocket server');
+        socket.onclose = () => console.log('Disconnected from WebSocket server');
+        socket.onerror = (error) => console.error('WebSocket error:', error);
+    </script>
+</body>
+
+</html>
