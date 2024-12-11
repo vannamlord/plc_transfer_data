@@ -3,11 +3,13 @@ import net from "net";
 import homeController from '../controller/homeController';
 
 const app = express();
+
 // Middleware to parse incoming form data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());  // In case you're sending JSON data
 
 let router = express.Router();
+
 // Handle form submission
 app.post('/', (req, res) => {
     const { ip, port, data } = req.body;
@@ -21,6 +23,12 @@ app.post('/', (req, res) => {
     client.connect(parseInt(port), ip, () => {
         console.log(`Connected to ${ip}:${port}`);
         client.write(data);
+    });
+
+    client.on("data", (responseData) => {
+        console.log("Response from server:", responseData.toString());
+        client.destroy(); // Close connection
+        res.send(`Data sent successfully! Server response: ${responseData.toString()}`);
     });
 
     client.on("error", (error) => {
