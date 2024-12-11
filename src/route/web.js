@@ -3,6 +3,9 @@ import net from "net";
 import homeController from '../controller/homeController';
 
 const app = express();
+// Middleware to parse incoming form data
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());  // In case you're sending JSON data
 
 let router = express.Router();
 // Handle form submission
