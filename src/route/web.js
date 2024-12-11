@@ -11,18 +11,20 @@ app.use(express.json());  // In case you're sending JSON data
 let router = express.Router();
 
 // Handle form submission
-app.post('/', (req, res) => {
+// Handle form submission (this will be the form in `uploadFile.ejs`)
+app.post('/send-data', (req, res) => {
     const { ip, port, data } = req.body;
-    console.log(`Example Transfer data at ${ip} at ${port} at ${data}`)
+
     // Validate input
     if (!ip || !port || !data) {
         return res.status(400).send("Error: IP, port, and data are required.");
     }
 
+    // Send data via TCP to the specified IP and port
     const client = new net.Socket();
     client.connect(parseInt(port), ip, () => {
         console.log(`Connected to ${ip}:${port}`);
-        client.write(data);
+        client.write(data); // Send the data to the TCP server
     });
 
     client.on("data", (responseData) => {
@@ -42,10 +44,11 @@ app.post('/', (req, res) => {
     });
 });
 
+
 // Initialize Routes
 const initWebRoute = (app) => {
     router.get('/', homeController.getUploadFilePage);
-    router.post('/', homeController.getUploadFilePage);
+    router.post('/send-data', homeController.handleSendData);
     return app.use('/', router);
 };
 
