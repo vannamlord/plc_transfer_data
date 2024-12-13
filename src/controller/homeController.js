@@ -16,6 +16,7 @@ let handleSendData = async (req, res) => {
 
     // Send the data over TCP
     const client = new net.Socket();
+    client.setTimeout(5000); // Set a timeout of 5 seconds
     client.connect(parseInt(port), ip, () => {
         console.log(`Connected to ${ip}:${port}`);
         client.write(data);
@@ -40,4 +41,4 @@ let handleSendData = async (req, res) => {
 
 module.exports = {
     getUploadFilePage, handleSendData
-}
+};

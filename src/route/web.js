@@ -11,7 +11,7 @@ app.use(express.json());
 // Initialize Routes
 const initWebRoute = (app) => {
     router.get('/', homeController.getUploadFilePage);
-    router.post('/', homeController.handleSendData);
+    router.post('/send-data', homeController.handleSendData);
     return app.use('/', router);
 };
 
